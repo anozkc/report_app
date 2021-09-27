@@ -116,5 +116,148 @@ my_label.pack()
 my_labe2 = Label(app, text="", font=("Helvetica", 12))
 my_labe2.pack()
 clock()
+def open():
+    global store
+    top = Toplevel()
+    top.title("ENTRY")
+    top.geometry("400x800")
+    #background image
+    store = PhotoImage(file="website.png")
+    labl = Label(top,image=store)
+    labl.pack()
+    conn  = sqlite3.connect("weather_book.db")
+
+    c = conn.cursor()
+    #creating table
+    # c.execute("""CREATE TABLE weather(
+    # city text,
+    # country text,
+    # temp_celsius text,
+    # temp_fahrenheit text,
+    # weather text)
+    # """)
+    # print("table created successfully")
+
+    #creating text boxes
+    city_lb = Label(top,text="city")#city,country,temp_celsius,temp_fahrenheit,icon,weather
+    city_lb.pack()
+
+    city = Entry(top,width=30)
+    city.pack()
+
+    country_lb = Label(top,text="country")
+    country_lb.pack()
+
+    country = Entry(top,width=30)
+    country.pack()
+
+    temp_cel = Label(top,text="temp in celsius")
+    temp_cel.pack()
+
+    temp_cels = Entry(top,width=30)
+    temp_cels.pack()
+
+    temp_fah = Label(top,text="temp in fahrenheit")
+    temp_fah.pack()
+
+    temp_fahr = Entry(top,width=30)
+    temp_fahr.pack()
+
+    weather_lb = Label(top,text="current weather")
+    weather_lb.pack()
+
+    weather = Entry(top,width=30)
+    weather.pack()
+
+    def submit():
+        #connecting to a database
+        conn = sqlite3.connect("weather_book.db")
+
+        c = conn.cursor()
+
+        #insert into table
+        c.execute("INSERT INTO weather VALUES(:city,:country,:temp_celsius,:temp_fahrenheit,:weather)",{
+            "city":city.get(),
+            "country":country.get(),
+            "temp_celsius":temp_cels.get(),
+            "temp_fahrenheit":temp_fahr.get(),
+            "weather":weather.get()
+        })
+        messagebox.showinfo("Adresses","inserted successfully")
+        conn.commit()
+        conn.close()
+    submit_btn = Button(top,text="add records",command=submit).pack(pady=10)
+
+    def query():
+        conn = sqlite3.connect("weather_book.db")
+
+        c = conn.cursor()
+
+        c.execute("SELECT * ,oid FROM weather")
+
+        records = c.fetchall()
+        print(records)
+
+        print_record = ""
+        for record in records:
+            print_record += (str(record[0]) + " " + str(record[1]) + " " + "\t" + str(record[5]) + "\n")
+
+        query_label = Label(top,text=print_record)
+        query_label.pack()
+
+        conn.commit()
+        conn.close()
+
+
+    query_btn = Button(top,text= "show weather records",command=query)
+    query_btn.pack(pady=10)
+
+    def delete():
+        #connecting to a database
+        conn = sqlite3.connect("weather_book.db")
+
+        c = conn.cursor()
+        #creating a cursor
+        c.execute("DELETE from weather WHERE oid = "+ delete_box.get())
+        print("Deleted successfully")
+
+        #query of the database
+
+        c.execute(" SELECT *, oid FROM weather")
+
+        records = c.fetchall()
+        #print records
+
+        #loop through the results
+
+        print_record = ""
+        for record in records:
+            print_record += (str(record[0]) + " " + str(record[1]) + " " + "\t"  + str(record[5])       )
+
+        query_label = Label(top,text=print_record)
+        query_label.pack()
+
+        conn.commit()
+        conn.close()
+
+    delete_labl = Label(top,text="Enter oid to delete" )
+    delete_labl.pack()
+
+    delete_box = Entry (top, width=30)
+    delete_box.pack(pady=10)
+
+    delete_btn = Button(top,text="DELETE", command=delete)
+    delete_btn.pack()
+
+
+label_3 = Label(app, text="to insert in the data of the weather that you queried ", bg="slategray", fg="white")
+label_3.pack()
+
+button_3 = Button(app, text="click here", command=open, bg="lightgray", fg="white")
+button_3.pack()
+
+conn.commit()
+conn.close()
+
 
 app.mainloop()
