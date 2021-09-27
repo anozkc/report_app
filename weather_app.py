@@ -1,5 +1,5 @@
 from tkinter import *
-
+from tkinter import messagebox
 from configparser import ConfigParser
 import requests
 url = "http://api.openweathermap.org/data/2.5/weather?q={}&appid={}"
@@ -49,11 +49,7 @@ def search():
 
 
     else:
-        pass
-
-
-
-
+        messagebox.showerror("error,""cannot find city {}".format(city))
 
 
 app = Tk()
