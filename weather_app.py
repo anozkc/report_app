@@ -96,5 +96,25 @@ temp_lbl.pack()
 
 weather_lbl = Label(app,text ="",font=('calibri bold',12),bg='azure1')
 weather_lbl.pack()
+def clock():
+    hour = time.strftime("%I")
+    minute = time.strftime("%M")
+    second = time.strftime("%S")
+    day = time.strftime("%A")
+    my_label.config(text=hour + ":" + minute + ":" + second)
+    my_labe2.config(text=day)
+    my_label.after(1000, clock)
+
+
+def update():
+    my_label.config(text="new text")
+
+
+my_label = Label(app, text="", font=("Helvetica", 18),bg="azure1",fg="black")
+my_label.pack()
+
+my_labe2 = Label(app, text="", font=("Helvetica", 12))
+my_labe2.pack()
+clock()
 
 app.mainloop()
