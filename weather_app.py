@@ -44,6 +44,25 @@ def search():
         location_lbl["text"] = '{},{}'.format(weather[0], weather[1])
         temp_lbl["text"]= '{:.2f}°C, {:.2f}°F'.format(weather[2], weather[3])
         weather_lbl["text"] = weather[4]
+        weather_image = (weather[5])
+        # my_img = ImageTk.PhotoImage(Image.open("weather_icon//" + weather_image + ".png"))
+        # img_label = Label(app,image=my_img)
+        # img_label.pack()
+        # img_label["image"]=my_img.show()
+        # create the canvas, size in pixels
+        canvas = Canvas(width=300, height=200, bg='black')
+
+        # pack the canvas into a frame/form
+        canvas.pack(expand=YES, fill=BOTH)
+
+        # load the .gif image file
+        gif1 = PhotoImage(file="weather_icon//" + weather_image + ".png")
+
+        # put gif image on canvas
+        # pic's upper left corner (NW) on the canvas is at x=50 y=10
+        canvas.create_image(50, 10, image=gif1, anchor=NW)
+        mainloop()
+        
 
 
 
