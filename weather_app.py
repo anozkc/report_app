@@ -1,7 +1,16 @@
 from tkinter import *
 from tkinter import messagebox
 from configparser import ConfigParser
+import sqlite3
 import requests
+import time
+# creating a database or connecting to one
+conn = sqlite3.connect("weather.db")
+
+# creating a cursor
+c = conn.cursor()
+
+
 url = "http://api.openweathermap.org/data/2.5/weather?q={}&appid={}"
 
 config_file = "config.init"
@@ -127,14 +136,14 @@ def open():
 
     c = conn.cursor()
     #creating table
-    # c.execute("""CREATE TABLE weather(
-    # city text,
-    # country text,
-    # temp_celsius text,
-    # temp_fahrenheit text,
-    # weather text)
-    # """)
-    # print("table created successfully")
+    c.execute("""CREATE TABLE weather(
+    city text,
+    country text,
+    temp_celsius text,
+    temp_fahrenheit text,
+    weather text)
+    """)
+    print("table created successfully")
 
     #creating text boxes
     city_lb = Label(top,text="city")#city,country,temp_celsius,temp_fahrenheit,icon,weather
