@@ -19,9 +19,10 @@ def get_weather(city):
        temp_kelvin = json['main']['temp']
        temp_celsius = temp_kelvin - 273.15
        temp_fahrenheit = (temp_kelvin - 273.15)*9/5+32
+       icon= jason["weather"][0]["icon"]
 
        weather = json["weather"][0]["main"]
-       final = [city,country,temp_celsius,temp_fahrenheit,weather]
+       final = [city,country,temp_celsius,temp_fahrenheit,weather,icon]
        return final
 
     else:
