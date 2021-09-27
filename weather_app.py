@@ -10,10 +10,10 @@ config.read(config_file)
 api_key = config['api_key']['key']
 
 def get_weather(city):
+    #requesting results from API in json format
     result = requests.get(url.format(city,api_key))
     if result:
        json = result.json()
-       #  (city,country,temp_fahrenheit,weather)
        city = json["name"]
        country = json["sys"]["country"]
        temp_kelvin = json['main']['temp']
@@ -46,11 +46,7 @@ def search():
         temp_lbl["text"]= '{:.2f}°C, {:.2f}°F'.format(weather[2], weather[3])
         weather_lbl["text"] = weather[4]
         weather_image = (weather[5])
-        # my_img = ImageTk.PhotoImage(Image.open("weather_icon//" + weather_image + ".png"))
-        # img_label = Label(app,image=my_img)
-        # img_label.pack()
-        # img_label["image"]=my_img.show()
-        # create the canvas, size in pixels
+      
         canvas = Canvas(width=300, height=200, bg='black')
 
         # pack the canvas into a frame/form
@@ -107,7 +103,9 @@ def clock():
 
 
 def update():
+    #changing state of time in every 60 sec
     my_label.config(text="new text")
+
 
 
 my_label = Label(app, text="", font=("Helvetica", 18),bg="azure1",fg="black")
@@ -184,7 +182,9 @@ def open():
             "weather":weather.get()
         })
         messagebox.showinfo("Adresses","inserted successfully")
+        #commiting changes
         conn.commit()
+        #closing changes
         conn.close()
     submit_btn = Button(top,text="add records",command=submit).pack(pady=10)
 
@@ -199,6 +199,7 @@ def open():
         print(records)
 
         print_record = ""
+        #showing records in terminal with OID
         for record in records:
             print_record += (str(record[0]) + " " + str(record[1]) + " " + "\t" + str(record[5]) + "\n")
 
