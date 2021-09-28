@@ -136,14 +136,14 @@ def open():
 
     c = conn.cursor()
     #creating table
-    c.execute("""CREATE TABLE weather(
-    city text,
-    country text,
-    temp_celsius text,
-    temp_fahrenheit text,
-    weather text)
-    """)
-    print("table created successfully")
+#     c.execute("""CREATE TABLE weather(
+#     city text,
+#     country text,
+#     temp_celsius text,
+#     temp_fahrenheit text,
+#     weather text)
+#     """)
+#     print("table created successfully")
 
     #creating text boxes
     city_lb = Label(top,text="city")#city,country,temp_celsius,temp_fahrenheit,icon,weather
